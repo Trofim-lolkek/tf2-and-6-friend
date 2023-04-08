@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <style type="text/css">
+        .item {
+            width: 150px;
+            height: 150px;
+            background-size:100%;
+            background-repeat: no-repeat;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            height: 200px;
+            width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .active {
+            border: 4px solid green;
+        }
+        .box {
+            height: 160px;
+            width: 400px;
+            background-color: white;
+            border: solid;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+            <h2>У тебя 10 секунд перед тем как ты умрешь</h2>
+            <h2>твоя задача объеденить подходящие предметы</h2>
+        </div>
+    <h1>Осталось времени <span class="Timer">10</span></h1>
+    <div class="row">
+    </div>
+    <script type="text/javascript">
+    //див-родитель
+    let row = document.querySelector(".row");
+
+    //хранение картинок
+    let images = ["sticky.png", "300hp.png", "sheep.png", "sniper.png", "spy.png", "key.png", "sticky.png", "300hp.png", "sheep.png", "sniper.png", "spy.png", "key.png"];
+    let img;
+    let step = 0;
+    let firstDiv;
+    let sum = 0
+    let t = 10
+
+    for (i=0; i<12; i=i+1) {
+        let item = document.createElement('div');
+         row.appendChild(item);
+         item.classList.add('item')
+         let index = Math.round(Math.random()*(images.length-1))
+         item.style.backgroundImage = 'url(' + images[index] + ')'
+         images.splice(index,1);
+
+         item.onclick = function() {
+            item.classList.add('active')
+            step = step + 1;
+
+            if (step == 1) {
+                img = item.style.backgroundImage;
+                firstDiv = item;
+            }
+
+             if (step >= 2) {
+              if(item.style.backgroundImage == img) {
+                console.log('совпадение');
+                sum = sum + 1;
+            item.style.opacity = '0'
+            firstDiv.style.opacity = '0'
+            } else {
+                console.log('не то');
+                firstDiv.classList.remove('active')
+                item.classList.remove('active')
+            }
+            step = '0'
+        }
+
+            
+        }
+    }
+
+    let endGame = function(){
+            clearInterval(interval1)
+            if (sum>=6) {
+                alert ('ты выжил')
+        }else {
+            alert('you deadth')
+        }
+}   
+ setTimeout(endGame,10000)
+ let Timer = function() {
+  t = t - 1
+  document.querySelector(".Timer").innerHTML = t
+ }
+interval1= setInterval(Timer, 1000)
+    </script>
+</body>
+</html>
